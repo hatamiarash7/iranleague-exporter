@@ -1,0 +1,8 @@
+.git*
+.venv
+.vscode
+.flake8
+poetry.toml
+config.toml*
+debug.log
+Makefile
