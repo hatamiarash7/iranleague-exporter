@@ -134,7 +134,7 @@ def start():
     """Start the application."""
     uvicorn.run(
         app="iranleague_exporter.main:app",
-        host="0.0.0.0",
-        port=8000,
+        host=get_env("HTTP_HOST", "0.0.0.0"),
+        port=get_env("HTTP_PORT", 8000),
         workers=1,  # 1 worker is enough for this purpose
     )
