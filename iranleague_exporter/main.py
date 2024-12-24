@@ -137,4 +137,44 @@ def start():
         host=get_env("HTTP_HOST", "0.0.0.0"),
         port=get_env("HTTP_PORT", 8000),
         workers=1,  # 1 worker is enough for this purpose
+        log_config={
+            "version": 1,
+            "disable_existing_loggers": False,
+            "formatters": {
+                "default": {
+                    "()": "uvicorn.logging.DefaultFormatter",
+                    "fmt": "%(levelprefix)s %(message)s",
+                    "use_colors": None,
+                },
+                "access": {
+                    "()": "uvicorn.logging.AccessFormatter",
+                    "fmt": '%(levelprefix)s %(client_addr)s - "%(request_line)s" %(status_code)s',  # noqa: E501
+                },
+            },
+            "handlers": {
+                "default": {
+                    "formatter": "default",
+                    "class": "logging.StreamHandler",
+                    "stream": "ext://sys.stderr",
+                },
+                "access": {
+                    "formatter": "access",
+                    "class": "logging.StreamHandler",
+                    "stream": "ext://sys.stdout",
+                },
+            },
+            "loggers": {
+                "uvicorn": {
+                    "handlers": ["default"],
+                    "level": get_env("LOg_LEVEL", "INFO"),
+                    "propagate": False,
+                },
+                "uvicorn.error": {"level": get_env("LOg_LEVEL", "INFO")},
+                "uvicorn.access": {
+                    "handlers": ["access"],
+                    "level": "INFO",
+                    "propagate": False,
+                },
+            },
+        },
     )
