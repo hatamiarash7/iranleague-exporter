@@ -23,18 +23,18 @@ def get_matches(url: str = URL) -> list:
     Returns:
         list: List of matches with week number, teams, and timestamp.
     """
-    response = requests.get(url)
+    response = requests.get(url=url, timeout=(5, 5))
     if response.status_code != 200:
         log.error(f"Failed to fetch data: HTTP {response.status_code}")
         return []
 
     # Parse the HTML content
-    soup = BeautifulSoup(response.text, "html.parser")
+    response = BeautifulSoup(response.text, "html.parser")
 
     # Find all the rows for weeks
-    weeks = soup.select("div.row[class='row']")
+    weeks = response.select("div.row[class='row']")
 
-    matches_without_scores = []
+    future_matches = []
 
     for week in weeks:
         # Find the week number (first div) and games table (second div)
@@ -42,7 +42,7 @@ def get_matches(url: str = URL) -> list:
         if len(divs) < 2:
             continue  # Skip if structure is unexpected
 
-        week_number = divs[0].get_text(strip=True)  # Extract the week number
+        # week_number = divs[0].get_text(strip=True)  # Extract the week number
         games_table = divs[1].find("table")  # Locate the table
 
         if not games_table:
@@ -65,17 +65,17 @@ def get_matches(url: str = URL) -> list:
                 day=int(date[2]), month=date[1], year=date[0]
             ).togregorian()
             time = columns[4].get_text(strip=True)
-            timestamp = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
-            timestamp = int(timestamp.timestamp())
+            time = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
+            time = int(time.timestamp())
 
             # Check if score is '-' (no score - we need future matches)
             if score == "-":
-                matches_without_scores.append(
+                future_matches.append(
                     {
-                        "week": week_number[5:],
+                        # "week": week_number[5:],
                         "teams": f"{team_a} vs {team_b}",
-                        "timestamp": timestamp,
+                        "timestamp": time,
                     }
                 )
 
-    return matches_without_scores
+    return future_matches

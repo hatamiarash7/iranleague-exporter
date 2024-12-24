@@ -99,11 +99,11 @@ async def periodic_update():
 
 
 @asynccontextmanager
-async def lifespan(application: FastAPI):
+async def lifespan(_: FastAPI):
     """Application lifespan function.
 
     Args:
-        application (FastAPI): FastAPI application.
+        _ (FastAPI): FastAPI application.
     """
     task = asyncio.create_task(periodic_update())
     background_tasks.add(task)
