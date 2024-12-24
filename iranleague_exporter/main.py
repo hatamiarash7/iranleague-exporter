@@ -20,7 +20,7 @@ from starlette.responses import Response
 from iranleague_exporter.crawler import get_matches
 from iranleague_exporter.utils import get_env
 
-UPDATE_INTERVAL_SECONDS = 30 * 60
+UPDATE_INTERVAL = get_env("UPDATE_INTERVAL", 30) * 60
 
 background_tasks = set()
 security = HTTPBasic()
@@ -90,11 +90,11 @@ def update_metrics():
 
 
 async def periodic_update():
-    """Periodically updates metrics every UPDATE_INTERVAL_SECONDS."""
+    """Periodically updates metrics every `UPDATE_INTERVAL` seconds."""
     update_metrics()  # Initial update
 
     while True:
-        await asyncio.sleep(UPDATE_INTERVAL_SECONDS)
+        await asyncio.sleep(UPDATE_INTERVAL)
         update_metrics()
 
 
