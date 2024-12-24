@@ -1,0 +1,132 @@
+[tool.poetry]
+authors = ["Arash Hatami <hatamiarash7@gmail.com>"]
+classifiers = [
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Development Status :: 5 - Production/Stable",
+]
+description = "Export Prometheus metrics for Iran football league"
+homepage = "https://arash-hatami.ir"
+keywords = ["iran", "football", "prometheus", "exporter", "metrics"]
+license = "MIT"
+name = "iranleague-exporter"
+packages = [{include = "iranleague_exporter"}]
+readme = "README.md"
+repository = "https://github.com/hatamiarash7/iranleague-exporter"
+version = "1.0.0"
+
+[tool.poetry.dependencies]
+beautifulsoup4 = "^4.12.3"
+fastapi = "^0.115.6"
+jdatetime = "^5.0.0"
+prometheus-client = "^0.21.1"
+python = "^3.10"
+python-slugify = "^8.0.4"
+requests = "^2.32.3"
+toml = "^0.10.2"
+uvicorn = "^0.34.0"
+
+[tool.poetry.scripts]
+start = "iranleague_exporter.main:start"
+
+[tool.poetry.group.test.dependencies]
+httpx = "^0.28.1"
+pytest = "^8.0.0"
+pytest-asyncio = "^0.25.0"
+pytest-cov = "^6.0.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.2.0"
+flake8-pyproject = "^1.2.3"
+isort = "^5.13.2"
+pylint = "^3.0.0"
+pytest = "^8.0.0"
+pytest-asyncio = "^0.25.0"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/hatamiarash7/iranleague-exporter/issues"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.flake8]
+per-file-ignores = ["test_*.py:E501"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.ruff]
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".ipynb_checkpoints",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pyenv",
+  ".pytest_cache",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "site-packages",
+  "venv",
+]
+indent-width = 4
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.analyze]
+detect-string-imports = true
+
+[tool.ruff.lint]
+extend-select = [
+  'D', # pydocstyle
+  'E',
+  'W', # pycodestyle
+  'F', # pyflakes
+  'I', # sort imports
+  'UP', # pyupgrade
+  "RUF", # ruff dev's own rules
+  "SIM", # pyflakes simplicity
+  "C90", # more complexity rules
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/{tests,docs,tools}/*" = ["E402", "D101"]
+"__init__.py" = ["E402"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+exclude = ["*.pyi"]
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
