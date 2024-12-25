@@ -139,7 +139,7 @@ def start():
     uvicorn.run(
         app="iranleague_exporter.main:app",
         host=get_env("HTTP_HOST", "0.0.0.0"),
-        port=get_env("HTTP_PORT", 8000),
+        port=int(get_env("HTTP_PORT", 8000)),
         workers=1,  # 1 worker is enough for this purpose
         log_config={
             "version": 1,
