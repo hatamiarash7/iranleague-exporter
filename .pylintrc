@@ -1,0 +1,2 @@
+[MESSAGES CONTROL]
+disable=logging-fstring-interpolation,global-statement,line-too-long,broad-exception-caught
