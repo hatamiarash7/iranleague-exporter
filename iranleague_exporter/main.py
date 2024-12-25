@@ -61,8 +61,8 @@ def verify_credentials(
 registry = CollectorRegistry()
 
 matches_gauge = Gauge(
-    "matches_timestamp",
-    "Timestamp of matches",
+    "ir_league_matches",
+    "Timestamp of IR football league matches",
     ["teams"],
     registry=registry,
 )
