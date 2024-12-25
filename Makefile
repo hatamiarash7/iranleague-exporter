@@ -11,7 +11,7 @@ lock: ## Update poetry.lock
 	@poetry lock
 
 run: ## Run project
-	@AUTH_USERNAME=admin AUTH_PASSWORD=1234 poetry run start
+	@AUTH_USERNAME=admin AUTH_PASSWORD=1234 LOG_LEVEL=DEBUG poetry run start
 
 test: ## Run tests
 	@poetry run pytest --cov-report html:htmlcov --cov-report term --cov=iranleague_exporter
