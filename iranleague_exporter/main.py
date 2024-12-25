@@ -80,10 +80,10 @@ def update_metrics():
 
             # Update metrics with new data
             for match in matches:
-                week = match.get("week")
+                # week = match.get("week")
                 teams = match.get("teams")
                 timestamp = match.get("timestamp")
-                if all(v is not None for v in (week, teams, timestamp)):
+                if all(v is not None for v in (teams, timestamp)):
                     matches_gauge.labels(teams=teams).set(timestamp)
     except Exception as e:
         log.error(f"Error updating metrics: {e}")
@@ -166,10 +166,10 @@ def start():
             "loggers": {
                 "uvicorn": {
                     "handlers": ["default"],
-                    "level": get_env("LOg_LEVEL", "INFO"),
+                    "level": get_env("LOG_LEVEL", "INFO"),
                     "propagate": False,
                 },
-                "uvicorn.error": {"level": get_env("LOg_LEVEL", "INFO")},
+                "uvicorn.error": {"level": get_env("LOG_LEVEL", "INFO")},
                 "uvicorn.access": {
                     "handlers": ["access"],
                     "level": "INFO",
