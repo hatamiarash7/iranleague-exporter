@@ -72,19 +72,23 @@ metric_lock = threading.Lock()
 
 def update_metrics():
     """Fetches match data and updates the Prometheus metrics."""
+    log.info("Updating metrics")
     try:
         matches = get_matches()
+        log.debug(f"Got {len(matches)} matches")
         with metric_lock:
             # Clear existing metrics
             matches_gauge.clear()
+            count = 0
 
             # Update metrics with new data
             for match in matches:
-                # week = match.get("week")
                 teams = match.get("teams")
                 timestamp = match.get("timestamp")
                 if all(v is not None for v in (teams, timestamp)):
                     matches_gauge.labels(teams=teams).set(timestamp)
+                    count += 1
+        log.debug(f"Update {count} metrics")
     except Exception as e:
         log.error(f"Error updating metrics: {e}")
 
