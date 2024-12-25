@@ -55,8 +55,8 @@ def get_matches(url: str = URL) -> list:
             if len(columns) < 7:
                 continue  # Skip rows with unexpected structure
 
-            team_a = slugify(columns[0].get_text(strip=True), lowercase=False)
-            team_b = slugify(columns[2].get_text(strip=True), lowercase=False)
+            team_a = columns[0].get_text(strip=True)
+            team_b = columns[2].get_text(strip=True)
 
             score = columns[1].get_text(strip=True)
 
@@ -73,7 +73,7 @@ def get_matches(url: str = URL) -> list:
                 future_matches.append(
                     {
                         # "week": week_number[5:],
-                        "teams": f"{team_a} vs {team_b}",
+                        "teams": slugify(f"{team_a} vs {team_b}", lowercase=False),
                         "timestamp": time,
                     }
                 )
