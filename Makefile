@@ -5,7 +5,7 @@ shell: ## Activate virtual environment
 	@poetry shell
 
 install: ## Install dependencies
-	@poetry install --with=dev
+	@poetry install --with=dev,test
 
 lock: ## Update poetry.lock
 	@poetry lock
