@@ -25,6 +25,7 @@ You can configure the exporter using the following environment variables:
 | LOG_LEVEL     | INFO    | Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) |
 | AUTH_USERNAME |         | Username for basic authentication                 |
 | AUTH_PASSWORD |         | Password for basic authentication                 |
+| LABEL_LANG    | FA      | Language for the team names (FA, EN)              |
 
 ---
 

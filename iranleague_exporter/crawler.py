@@ -14,10 +14,11 @@ URL = "https://iranleague.ir/fa/MatchSchedule/1/1"
 log = logging.getLogger("uvicorn.error")
 
 
-def get_matches(url: str = URL) -> list:
+def get_matches(lang: str, url: str = URL) -> list:
     """Crawl the match schedule website and extract the matches.
 
     Args:
+        lang (str): Language of the team names.
         url (str): URL of the match schedule.
 
     Returns:
@@ -42,7 +43,6 @@ def get_matches(url: str = URL) -> list:
         if len(divs) < 2:
             continue  # Skip if structure is unexpected
 
-        # week_number = divs[0].get_text(strip=True)  # Extract the week number
         games_table = divs[1].find("table")  # Locate the table
 
         if not games_table:
@@ -55,8 +55,11 @@ def get_matches(url: str = URL) -> list:
             if len(columns) < 7:
                 continue  # Skip rows with unexpected structure
 
-            team_a = columns[0].get_text(strip=True)
-            team_b = columns[2].get_text(strip=True)
+            teams = f"{columns[0].get_text(strip=True)} vs {columns[2].get_text(strip=True)}"  # noqa: E501
+
+            # Slugify the team names (for Prometheus labels) for non-fa lang
+            if lang != "FA":
+                teams = slugify(teams, lowercase=False).replace("-vs-", " vs ")
 
             score = columns[1].get_text(strip=True)
 
@@ -72,8 +75,7 @@ def get_matches(url: str = URL) -> list:
             if score == "-":
                 future_matches.append(
                     {
-                        # "week": week_number[5:],
-                        "teams": slugify(f"{team_a} vs {team_b}", lowercase=False),
+                        "teams": teams,
                         "timestamp": time,
                     }
                 )

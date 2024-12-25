@@ -55,10 +55,58 @@ class TestGetMatches(unittest.TestCase):
         date = jdatetime.date(day=10, month=10, year=1402).togregorian()
         time = "15:30"
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         expected_result = [
             {
                 "teams": "Team-A vs Team-B",
+                "timestamp": int(
+                    datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M").timestamp()
+                ),  # Corresponds to 1402/10/10 15:30
+            }
+        ]
+
+        self.assertEqual(result, expected_result)
+
+    @patch("iranleague_exporter.crawler.requests.get")
+    def test_successful_response_with_valid_data_fa(self, mock_get):
+        """Test a successful response with valid HTML content for FA language."""
+        # Mock HTML response
+        mock_html = """
+        <html>
+            <body>
+                <div class="row">
+                    <div>Week 1</div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>تیم اول</td>
+                                    <td>-</td>
+                                    <td>تیم دوم</td>
+                                    <td>1402/10/10</td>
+                                    <td>15:30</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = mock_html
+        mock_get.return_value = mock_response
+
+        date = jdatetime.date(day=10, month=10, year=1402).togregorian()
+        time = "15:30"
+
+        result = get_matches(lang="FA")
+        expected_result = [
+            {
+                "teams": "تیم اول vs تیم دوم",
                 "timestamp": int(
                     datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M").timestamp()
                 ),  # Corresponds to 1402/10/10 15:30
@@ -74,7 +122,7 @@ class TestGetMatches(unittest.TestCase):
         mock_response.status_code = 404
         mock_get.return_value = mock_response
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         self.assertEqual(result, [])  # Should return an empty list
 
     @patch("iranleague_exporter.crawler.requests.get")
@@ -85,7 +133,7 @@ class TestGetMatches(unittest.TestCase):
         mock_response.text = ""
         mock_get.return_value = mock_response
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         self.assertEqual(result, [])  # Should return an empty list
 
     @patch("iranleague_exporter.crawler.requests.get")
@@ -106,7 +154,7 @@ class TestGetMatches(unittest.TestCase):
         mock_response.text = mock_html
         mock_get.return_value = mock_response
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         self.assertEqual(result, [])  # Should return an empty list
 
     @patch("iranleague_exporter.crawler.requests.get")
@@ -140,7 +188,7 @@ class TestGetMatches(unittest.TestCase):
         mock_response.text = mock_html
         mock_get.return_value = mock_response
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         self.assertEqual(result, [])  # Should return an empty list
 
     @patch("iranleague_exporter.crawler.requests.get")
@@ -173,5 +221,5 @@ class TestGetMatches(unittest.TestCase):
         mock_response.text = mock_html
         mock_get.return_value = mock_response
 
-        result = get_matches()
+        result = get_matches(lang="EN")
         self.assertEqual(result, [])  # Should return an empty list

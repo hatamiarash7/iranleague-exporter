@@ -74,7 +74,7 @@ def update_metrics():
     """Fetches match data and updates the Prometheus metrics."""
     log.info("Updating metrics")
     try:
-        matches = get_matches()
+        matches = get_matches(get_env("LABEL_LANG", "FA"))
         log.debug(f"Got {len(matches)} matches")
         with metric_lock:
             # Clear existing metrics
