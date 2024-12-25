@@ -58,7 +58,6 @@ class TestGetMatches(unittest.TestCase):
         result = get_matches()
         expected_result = [
             {
-                "week": "1",
                 "teams": "Team-A vs Team-B",
                 "timestamp": int(
                     datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M").timestamp()

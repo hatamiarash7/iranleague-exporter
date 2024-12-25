@@ -78,7 +78,7 @@ class TestMainModule(unittest.TestCase):
     def test_metrics_endpoint_authenticated(self, mock_get_matches):
         """Test authenticated access to the /metrics endpoint."""
         mock_get_matches.return_value = [
-            {"week": "1", "teams": "TeamA vs TeamB", "timestamp": 1672531200},
+            {"teams": "TeamA vs TeamB", "timestamp": 1672531200},
         ]
 
         response = self.client.get(
@@ -87,7 +87,7 @@ class TestMainModule(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("matches_timestamp", response.text)
+        self.assertIn("ir_league_matches", response.text)
 
     def test_metrics_endpoint_unauthorized(self):
         """Test unauthorized access to the /metrics endpoint."""
