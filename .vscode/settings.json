@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
+        "aquasecurity",
         "asyncio",
         "beautifulsoup",
         "direnv",
         "fastapi",
+        "gacts",
         "ipynb",
         "iranleague",
         "isort",
@@ -19,6 +21,8 @@
         "pytest",
         "pytype",
         "pyupgrade",
+        "sarif",
+        "styfle",
         "testpaths",
         "togregorian",
         "uvicorn",
