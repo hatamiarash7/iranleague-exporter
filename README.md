@@ -18,14 +18,15 @@ Check the metrics at `http://localhost:8000/metrics`.
 
 You can configure the exporter using the following environment variables:
 
-| Key           | Default | Description                                       |
-| ------------- | ------- | ------------------------------------------------- |
-| HTTP_HOST     | 0.0.0.0 | Host to bind the HTTP server to                   |
-| HTTP_PORT     | 8000    | Port to bind the HTTP server to                   |
-| LOG_LEVEL     | INFO    | Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) |
-| AUTH_USERNAME |         | Username for basic authentication                 |
-| AUTH_PASSWORD |         | Password for basic authentication                 |
-| LABEL_LANG    | FA      | Language for the team names (FA, EN)              |
+| Key             | Default | Description                                         |
+| --------------- | ------- | --------------------------------------------------- |
+| HTTP_HOST       | 0.0.0.0 | Host to bind the HTTP server to                     |
+| HTTP_PORT       | 8000    | Port to bind the HTTP server to                     |
+| LOG_LEVEL       | INFO    | Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)   |
+| AUTH_USERNAME   |         | Username for basic authentication                   |
+| AUTH_PASSWORD   |         | Password for basic authentication                   |
+| LABEL_LANG      | FA      | Language for the team names (FA, EN)                |
+| UPDATE_INTERVAL | 30      | Interval to update the match schedules (in minutes) |
 
 Also, you can use the `TZ` environment variable to set the timezone for the exporter. The default timezone is dependent on the host system. Set it to `Asia/Tehran` to get the Iran timezone.
 
