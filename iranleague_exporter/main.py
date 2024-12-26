@@ -20,7 +20,7 @@ from starlette.responses import Response
 from iranleague_exporter.crawler import get_matches
 from iranleague_exporter.utils import get_env
 
-UPDATE_INTERVAL = get_env("UPDATE_INTERVAL", 30) * 60
+UPDATE_INTERVAL = int(get_env("UPDATE_INTERVAL", 30)) * 60
 
 background_tasks = set()
 security = HTTPBasic()
@@ -112,6 +112,7 @@ async def lifespan(_: FastAPI):
     task = asyncio.create_task(periodic_update())
     background_tasks.add(task)
     task.add_done_callback(background_tasks.discard)
+    log.info("Updating metrics every `%d` minutes", UPDATE_INTERVAL // 60)
     yield
 
 
