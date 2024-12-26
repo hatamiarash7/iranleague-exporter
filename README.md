@@ -27,6 +27,8 @@ You can configure the exporter using the following environment variables:
 | AUTH_PASSWORD |         | Password for basic authentication                 |
 | LABEL_LANG    | FA      | Language for the team names (FA, EN)              |
 
+Also, you can use the `TZ` environment variable to set the timezone for the exporter. The default timezone is dependent on the host system. Set it to `Asia/Tehran` to get the Iran timezone.
+
 ---
 
 ## Support 💛
