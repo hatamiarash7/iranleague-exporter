@@ -37,7 +37,7 @@ start = "iranleague_exporter.main:start"
 [tool.poetry.group.test.dependencies]
 httpx = "^0.28.1"
 pytest = "^8.0.0"
-pytest-asyncio = "^0.25.0"
+pytest-asyncio = "^0.25.1"
 pytest-cov = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -46,7 +46,7 @@ flake8-pyproject = "^1.2.3"
 isort = "^5.13.2"
 pylint = "^3.0.0"
 pytest = "^8.0.0"
-pytest-asyncio = "^0.25.0"
+pytest-asyncio = "^0.25.1"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/hatamiarash7/iranleague-exporter/issues"
