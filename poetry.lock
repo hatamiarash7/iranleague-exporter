@@ -518,13 +518,13 @@ files = [
 
 [[package]]
 name = "jdatetime"
-version = "5.0.0"
+version = "5.1.0"
 description = "Jalali datetime binding for python"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "jdatetime-5.0.0-py3-none-any.whl", hash = "sha256:37e23c710d7e9bde7c37d0cc3ff9e273323889790e902a1ef3ad99148f094fb9"},
-    {file = "jdatetime-5.0.0.tar.gz", hash = "sha256:2cc603d913c0d8e328928454d3d295261cb037e9950227f67c9629ab4710fdf9"},
+    {file = "jdatetime-5.1.0-py3-none-any.whl", hash = "sha256:b50fb77666107b863068a5d0143022a7ce7e17df8bfd0fcdd8d93e79112ebec6"},
+    {file = "jdatetime-5.1.0.tar.gz", hash = "sha256:25af1f48d1456b9a0acc7b32c68c66e9cccbae541672f9b9724f274d7810a307"},
 ]
 
 [package.dependencies]
