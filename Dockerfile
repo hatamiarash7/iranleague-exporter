@@ -30,8 +30,8 @@ LABEL org.opencontainers.version="$APP_VERSION"
 LABEL org.opencontainers.image.created="$DATE_CREATED"
 LABEL org.opencontainers.image.licenses="MIT"
 
-RUN apt update \
-    && apt install --no-install-recommends -y \
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
     curl \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
