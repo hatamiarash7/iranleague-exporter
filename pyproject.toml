@@ -27,7 +27,7 @@ jdatetime = "^5.0.0"
 prometheus-client = "^0.22.0"
 python = "^3.10"
 python-slugify = "^8.0.4"
-requests = "^2.32.3"
+requests = "^2.32.5"
 toml = "^0.10.2"
 uvicorn = "^0.35.0"
 
