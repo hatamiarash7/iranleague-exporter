@@ -38,7 +38,7 @@ start = "iranleague_exporter.main:start"
 httpx = "^0.28.1"
 pytest = "^8.0.0"
 pytest-asyncio = "^1.0.0"
-pytest-cov = "^6.0.0"
+pytest-cov = "^7.0.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.0.0"
