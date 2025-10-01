@@ -43,7 +43,7 @@ pytest-cov = "^6.0.0"
 [tool.poetry.group.dev.dependencies]
 black = "^25.0.0"
 flake8-pyproject = "^1.2.3"
-isort = "^6.0.0"
+isort = "^6.1.0"
 pylint = "^3.0.0"
 pytest = "^8.0.0"
 pytest-asyncio = "^1.0.0"
