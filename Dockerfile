@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.14-slim AS builder
+FROM --platform=$BUILDPLATFORM python:3.12-slim AS builder
 
 ARG APP_VERSION="undefined@docker"
 ARG DATE_CREATED
@@ -47,5 +47,16 @@ COPY ./poetry.lock .
 RUN poetry install --without dev,test --no-interaction --no-ansi
 
 COPY . .
+
+RUN groupadd --gid 1000 appgroup \
+    && useradd --uid 1000 --gid appgroup --shell /bin/sh appuser \
+    && chown -R appuser:appgroup /app
+
+USER appuser
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
 
 CMD ["python", "-m", "iranleague_exporter"]

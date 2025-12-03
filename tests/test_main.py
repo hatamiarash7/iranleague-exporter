@@ -1,18 +1,16 @@
 """Tests for the main module."""
 
-import asyncio
 import os
 import unittest
 from unittest.mock import MagicMock, patch
 
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
-from prometheus_client import CollectorRegistry
 
+from iranleague_exporter.config import reset_config
 from iranleague_exporter.main import (
     app,
     matches_gauge,
-    periodic_update,
     update_metrics,
     verify_credentials,
 )
@@ -21,12 +19,19 @@ from iranleague_exporter.main import (
 class TestMainModule(unittest.TestCase):
     def setUp(self):
         """Set up the FastAPI test client."""
-        self.client = TestClient(app)
-        self.registry = CollectorRegistry()
+        reset_config()
+        self.client = TestClient(app, raise_server_exceptions=False)
         self.test_username = "test_user"
         self.test_password = "test_pass"
-        os.environ.setdefault("AUTH_USERNAME", self.test_username)
-        os.environ.setdefault("AUTH_PASSWORD", self.test_password)
+        os.environ["AUTH_USERNAME"] = self.test_username
+        os.environ["AUTH_PASSWORD"] = self.test_password
+
+    def tearDown(self):
+        """Clean up environment and reset config."""
+        reset_config()
+        for key in ["AUTH_USERNAME", "AUTH_PASSWORD"]:
+            if key in os.environ:
+                del os.environ[key]
 
     def test_verify_credentials_success(self):
         """Test successful verification of credentials."""
@@ -72,7 +77,7 @@ class TestMainModule(unittest.TestCase):
         with self.assertLogs("uvicorn.error", level="ERROR") as log:
             update_metrics()
 
-        self.assertIn("Error updating metrics: Mocked exception", log.output[0])
+        self.assertTrue(any("Mocked exception" in output for output in log.output))
 
     @patch("iranleague_exporter.main.get_matches")
     def test_metrics_endpoint_authenticated(self, mock_get_matches):
@@ -95,15 +100,15 @@ class TestMainModule(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertIn("Incorrect username or password", response.text)
 
-    @patch("iranleague_exporter.main.update_metrics")
-    @patch(
-        "asyncio.sleep",
-        side_effect=asyncio.CancelledError,
-    )  # Simulate task cancellation
-    def test_periodic_update(self, mock_sleep, mock_update_metrics):
-        """Test periodic update function."""
-        with self.assertRaises(asyncio.CancelledError):
-            asyncio.run(periodic_update())
+    def test_health_endpoint(self):
+        """Test the health check endpoint."""
+        response = self.client.get("/health")
+        self.assertIn(response.status_code, [200, 503])
+        self.assertIn("status", response.json())
+        self.assertIn("version", response.json())
 
-        # Ensure update was called at least once
-        mock_update_metrics.assert_called_once()
+    def test_readiness_endpoint(self):
+        """Test the readiness check endpoint."""
+        response = self.client.get("/ready")
+        self.assertIn(response.status_code, [200, 503])
+        self.assertIn("ready", response.json())

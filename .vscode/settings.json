@@ -5,6 +5,7 @@
         "beautifulsoup",
         "direnv",
         "fastapi",
+        "forcelist",
         "gacts",
         "htmlcov",
         "httpx",

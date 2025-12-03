@@ -37,11 +37,8 @@ class TestGetEnvFunction(unittest.TestCase):
     @patch.dict("os.environ", {}, clear=True)
     def test_get_env_default_is_none(self):
         """Test get_env returns None when key is absent and default is None."""
-        with self.assertRaises(Exception) as context:
-            get_env("MISSING_KEY", default=None)
-        self.assertIn(
-            "Environment variable 'MISSING_KEY' is not set.", str(context.exception)
-        )
+        result = get_env("MISSING_KEY", default=None)
+        self.assertIsNone(result)
 
     @patch.dict("os.environ", {"TEST_KEY": ""}, clear=True)
     def test_env_variable_set_to_empty(self):
