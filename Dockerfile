@@ -33,6 +33,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     curl \
+    build-essential \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
