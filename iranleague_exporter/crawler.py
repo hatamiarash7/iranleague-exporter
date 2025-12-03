@@ -34,10 +34,11 @@ def get_matches(lang: str, url: str = URL) -> list:
 
     # Find all the rows for weeks
     weeks = response.select("div.row[class='row']")
+    log.debug(f"Found {len(weeks)} weeks")
 
     future_matches = []
 
-    for week in weeks:
+    for index, week in enumerate(weeks):
         # Find the week number (first div) and games table (second div)
         divs = week.find_all("div", recursive=False)
         if len(divs) < 2:
@@ -50,12 +51,15 @@ def get_matches(lang: str, url: str = URL) -> list:
 
         # Iterate through all table rows in tbody
         rows = games_table.find("tbody").find_all("tr")
+        log.debug(f"Found {len(rows)} matches in week {index + 1}")
+
         for row in rows:
             columns = row.find_all("td")
             if len(columns) < 7:
                 continue  # Skip rows with unexpected structure
 
             teams = f"{columns[0].get_text(strip=True)} vs {columns[2].get_text(strip=True)}"  # noqa: E501
+            log.debug(f"Processing match: {teams}")
 
             # Slugify the team names (for Prometheus labels) for non-fa lang
             if lang != "FA":
