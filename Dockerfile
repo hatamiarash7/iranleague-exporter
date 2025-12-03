@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.12-slim AS builder
+FROM --platform=$BUILDPLATFORM python:3.14-slim AS builder
 
 ARG APP_VERSION="undefined@docker"
 ARG DATE_CREATED
