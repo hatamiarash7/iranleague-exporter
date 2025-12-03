@@ -68,6 +68,9 @@ def get_matches(lang: str, url: str = URL) -> list:
                 day=int(date[2]), month=date[1], year=date[0]
             ).togregorian()
             time = columns[4].get_text(strip=True)
+            # If time is missing, default to "00:00".
+            if not time:
+                time = "00:00"
             time = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
             time = int(time.timestamp())
 
