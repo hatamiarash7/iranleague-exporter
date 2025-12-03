@@ -1,4 +1,4 @@
-.PHONY: shell install lock run lint format typecheck test test-cov clean help
+.PHONY: shell install lock run lint format typecheck test test-cov clean vuln help
 .DEFAULT_GOAL := help
 
 shell: ## Activate virtual environment
@@ -34,6 +34,10 @@ clean: ## Clean up generated files
 	@rm -rf htmlcov .coverage .pytest_cache .mypy_cache .ruff_cache
 	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	@find . -type f -name "*.pyc" -delete 2>/dev/null || true
+
+vuln: ## Check for vulnerabilities
+	osv-scanner scan --lockfile poetry.lock
+	bandit -r . --severity-level=high --exclude ./.venv,./.git
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

@@ -48,6 +48,7 @@ pytest-cov = "^7.0.0"
 responses = "^0.25.0"
 
 [tool.poetry.group.dev.dependencies]
+bandit = "^1.9.2"
 black = "^25.0.0"
 flake8-pyproject = "^1.2.3"
 isort = "^7.0.0"
