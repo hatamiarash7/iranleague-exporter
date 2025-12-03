@@ -1,6 +1,6 @@
 # Iran Football League Exporter
 
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![GitHub release](https://img.shields.io/github/release/hatamiarash7/iranleague-exporter.svg)](https://GitHub.com/hatamiarash7/iranleague-exporter/releases/) [![Release](https://github.com/hatamiarash7/iranleague-exporter/actions/workflows/release.yml/badge.svg)](https://github.com/hatamiarash7/iranleague-exporter/actions/workflows/release.yml) ![GitHub](https://img.shields.io/github/license/hatamiarash7/iranleague-exporter)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![GitHub release](https://img.shields.io/github/release/hatamiarash7/iranleague-exporter.svg)](https://GitHub.com/hatamiarash7/iranleague-exporter/releases/) [![Release](https://github.com/hatamiarash7/iranleague-exporter/actions/workflows/release.yml/badge.svg)](https://github.com/hatamiarash7/iranleague-exporter/actions/workflows/release.yml) ![GitHub License](https://img.shields.io/github/license/hatamiarash7/iranleague-exporter)
 
 Export football match schedules as Prometheus metrics for Iran league. This script will use the [https://iranleague.ir](https://iranleague.ir) site to fetch the match schedules and export them as Prometheus metrics.
 
