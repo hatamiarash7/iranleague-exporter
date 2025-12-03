@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import logging
 import secrets
-import signal
 import sys
 import threading
 from contextlib import asynccontextmanager
@@ -192,16 +191,10 @@ async def periodic_update() -> None:
         except TimeoutError:
             # Timeout means it's time to update
             update_metrics()
-
-
-def _handle_shutdown_signal(sig: signal.Signals) -> None:
-    """Handle shutdown signals gracefully.
-
-    Args:
-        sig: The signal that was received.
-    """
-    log.info("Received signal %s, initiating graceful shutdown", sig.name)
-    _shutdown_event.set()
+        except asyncio.CancelledError:
+            # Task was cancelled, exit gracefully
+            log.debug("Periodic update task cancelled")
+            break
 
 
 @asynccontextmanager
@@ -231,11 +224,6 @@ async def lifespan(_: FastAPI) -> AsyncGenerator[None, None]:
             "update_interval": str(config.update_interval_minutes),
         }
     )
-
-    # Set up signal handlers for graceful shutdown
-    loop = asyncio.get_running_loop()
-    for sig in (signal.SIGTERM, signal.SIGINT):
-        loop.add_signal_handler(sig, _handle_shutdown_signal, sig)
 
     # Start background task
     task = asyncio.create_task(periodic_update())
