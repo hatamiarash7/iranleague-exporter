@@ -6,6 +6,8 @@
         "direnv",
         "fastapi",
         "gacts",
+        "htmlcov",
+        "httpx",
         "ipynb",
         "iranleague",
         "isort",
