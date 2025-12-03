@@ -343,14 +343,14 @@ def start() -> None:
             "formatters": {
                 "default": {
                     "()": "uvicorn.logging.DefaultFormatter",
-                    "fmt": "%(levelprefix)s %(asctime)s %(message)s",
+                    "fmt": "%(asctime)s %(levelprefix)s %(message)s",
                     "datefmt": "%Y-%m-%d %H:%M:%S",
                     "use_colors": None,
                 },
                 "access": {
                     "()": "uvicorn.logging.AccessFormatter",
                     "fmt": (
-                        "%(levelprefix)s %(asctime)s %(client_addr)s - "
+                        "%(asctime)s %(levelprefix)s %(client_addr)s - "
                         '"%(request_line)s" %(status_code)s'
                     ),
                     "datefmt": "%Y-%m-%d %H:%M:%S",
