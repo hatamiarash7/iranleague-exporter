@@ -1,7 +1,8 @@
-.PHONY: shell install lock run lint format typecheck test test-cov clean vuln help
+.PHONY: env install lock run lint format typecheck test test-cov clean vuln help
 .DEFAULT_GOAL := help
 
-shell: ## Activate virtual environment
+env: ## Activate virtual environment
+	@echo "\033[0;36m\n\n!! The 'exit' should be used to properly exit the shell and the virtual environment instead of 'deactivate'. !!\n\n\033[0m"
 	@poetry shell
 
 install: ## Install dependencies
