@@ -4,6 +4,8 @@
 
 Export football match schedules as Prometheus metrics for Iran league. This script will use the [https://iranleague.ir](https://iranleague.ir) site to fetch the match schedules and export them as Prometheus metrics.
 
+![sc](.github/sc.png)
+
 ## Features
 
 - Automatic retry with exponential backoff for failed requests
