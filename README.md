@@ -134,6 +134,6 @@ Don't be shy and reach out to us if you want to contribute 😉
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-## Issues
+## Issues 🐛
 
 Each project may have many problems. Contributing to the better development of this project by reporting them. 👍

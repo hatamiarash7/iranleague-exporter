@@ -15,6 +15,7 @@
         "jdatetime",
         "levelprefix",
         "mypy",
+        "pycache",
         "pycodestyle",
         "pydocstyle",
         "pyenv",
@@ -28,6 +29,7 @@
         "styfle",
         "testpaths",
         "togregorian",
+        "urllib",
         "uvicorn",
         "venv"
     ]
