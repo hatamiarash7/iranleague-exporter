@@ -27,7 +27,7 @@ version = "1.2.0"
 
 [tool.poetry.dependencies]
 beautifulsoup4 = "^4.12.3"
-fastapi = "^0.123.0"
+fastapi = "^0.124.0"
 jdatetime = "^5.0.0"
 prometheus-client = "^0.23.0"
 python = "^3.10"
