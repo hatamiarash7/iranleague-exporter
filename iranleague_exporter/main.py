@@ -26,6 +26,7 @@ from starlette.responses import JSONResponse, Response
 from iranleague_exporter import __version__
 from iranleague_exporter.config import get_config
 from iranleague_exporter.crawler import CrawlerError, get_matches
+from iranleague_exporter.utils import LogFilter
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -125,7 +126,7 @@ def update_metrics() -> None:
         log.debug("Got %d matches", len(matches))
 
         with metric_lock:
-            # Clear existing match metrics
+            # Clear existing match metrics. We should not accumulate old data
             matches_gauge.clear()
             count = 0
 
@@ -366,6 +367,7 @@ def start() -> None:
                     "formatter": "access",
                     "class": "logging.StreamHandler",
                     "stream": "ext://sys.stdout",
+                    "filters": ["access_filter"],
                 },
             },
             "loggers": {
@@ -381,6 +383,7 @@ def start() -> None:
                     "propagate": False,
                 },
             },
+            "filters": {"access_filter": {"()": LogFilter}},
         },
     )
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 from typing import overload
 
@@ -45,3 +46,13 @@ def get_env(key: str, default: str | None = "") -> str | None:
         raise OSError(f"Environment variable '{key}' is not set.")
 
     return value
+
+
+class LogFilter(logging.Filter):
+    """Filter to exclude health check and favicon from uvicorn access logs."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Return False to exclude the log record."""
+        message = record.getMessage()
+        # Filter out /health and /favicon.ico requests
+        return not any(path in message for path in ["/health", "/favicon.ico"])
