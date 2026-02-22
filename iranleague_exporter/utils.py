@@ -35,7 +35,7 @@ def get_env(key: str, default: str | None = "") -> str | None:
     Raises:
         OSError: If the environment variable is not set and default is "".
     """
-    value = os.getenv(key, default)
+    value: str | None = os.getenv(key, default)
 
     # If value is None, return None (only when default was None)
     if value is None:

@@ -18,7 +18,7 @@ from iranleague_exporter.config import CrawlerConfig, Language, get_config
 if TYPE_CHECKING:
     from requests import Session
 
-log = logging.getLogger("uvicorn.error")
+log: logging.Logger = logging.getLogger("uvicorn.error")
 
 
 class CrawlerError(Exception):
@@ -37,7 +37,7 @@ class HTTPError(CrawlerError):
             status_code: HTTP status code.
             message: Optional error message.
         """
-        self.status_code = status_code
+        self.status_code: int = status_code
         super().__init__(message or f"HTTP error: {status_code}")
 
 
@@ -99,7 +99,7 @@ def _parse_date_time(date_str: str, time_str: str) -> int:
         ParseError: If date/time cannot be parsed.
     """
     try:
-        date_parts = list(map(int, date_str.split("/")))
+        date_parts: list[int] = list(map(int, date_str.split("/")))
         if len(date_parts) != 3:
             raise ParseError(f"Invalid date format: {date_str}")
 
@@ -113,7 +113,7 @@ def _parse_date_time(date_str: str, time_str: str) -> int:
         if not time_str or time_str.strip() == "":
             time_str = "00:00"
 
-        datetime_obj = datetime.strptime(
+        datetime_obj: datetime = datetime.strptime(
             f"{gregorian_date} {time_str}", "%Y-%m-%d %H:%M"
         )
         return int(datetime_obj.timestamp())
@@ -154,7 +154,7 @@ def _parse_match_row(row: Any, lang: Language) -> dict[str, Any] | None:
     time_str = columns[4].get_text(strip=True)
 
     try:
-        timestamp = _parse_date_time(date_str, time_str)
+        timestamp: int = _parse_date_time(date_str, time_str)
     except ParseError as e:
         log.warning("Failed to parse match date/time: %s", e)
         return None
@@ -195,10 +195,10 @@ def get_matches(
             lang = Language.EN
 
     # Use provided URL or default from config
-    target_url = url or config.url
+    target_url: str = url or config.url
 
     # Create session if not provided
-    own_session = session is None
+    own_session: bool = session is None
     if session is None:
         session = _create_session(config)
 

@@ -30,7 +30,7 @@ def get_package_version() -> str:
         # Fall back on getting it from a local pyproject.toml.
         # This works in a development environment where the
         # package has not been installed from a distribution.
-        pyproject_toml_file = Path(__file__).parent.parent / "pyproject.toml"
+        pyproject_toml_file: Path = Path(__file__).parent.parent / "pyproject.toml"
         if pyproject_toml_file.exists() and pyproject_toml_file.is_file():
             __package_version = toml.load(pyproject_toml_file)["tool"]["poetry"][
                 "version"
@@ -62,7 +62,7 @@ __description__ = "Export Prometheus metrics for Iran football league"
 __version__ = f"v{get_package_version()}"
 
 # Export commonly used items
-__all__ = [
+__all__: list[str] = [
     "__app_name__",
     "__description__",
     "__version__",
@@ -70,4 +70,3 @@ __all__ = [
 ]
 __author__ = "Arash Hatami <info@arash-hatami.ir>"
 __epilog__ = "Made with :heart:  in [green]Iran[/green]"
-__all__ = ["__version__"]

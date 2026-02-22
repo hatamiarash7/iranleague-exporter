@@ -24,7 +24,7 @@ from prometheus_client import (
 from starlette.responses import JSONResponse, Response
 
 from iranleague_exporter import __version__
-from iranleague_exporter.config import get_config
+from iranleague_exporter.config import AppConfig, get_config
 from iranleague_exporter.crawler import CrawlerError, get_matches
 from iranleague_exporter.utils import LogFilter
 
@@ -39,7 +39,7 @@ _last_error: str | None = None
 
 background_tasks: set[asyncio.Task] = set()
 security = HTTPBasic()
-log = logging.getLogger("uvicorn.error")
+log: logging.Logger = logging.getLogger("uvicorn.error")
 
 # Prometheus registry and metrics
 registry = CollectorRegistry()
@@ -92,13 +92,13 @@ def verify_credentials(
     Raises:
         HTTPException: If credentials are incorrect.
     """
-    config = get_config()
+    config: AppConfig = get_config()
 
-    correct_username = secrets.compare_digest(
+    correct_username: bool = secrets.compare_digest(
         credentials.username,
         config.auth.username,
     )
-    correct_password = secrets.compare_digest(
+    correct_password: bool = secrets.compare_digest(
         credentials.password,
         config.auth.password,
     )
@@ -117,9 +117,9 @@ def update_metrics() -> None:
     """Fetch match data and update the Prometheus metrics."""
     global _last_update_time, _last_update_success, _last_error
 
-    config = get_config()
+    config: AppConfig = get_config()
     log.info("Updating metrics")
-    start_time = datetime.now(UTC)
+    start_time: datetime = datetime.now(UTC)
 
     try:
         matches = get_matches(config.label_lang)
@@ -139,7 +139,7 @@ def update_metrics() -> None:
                     count += 1
 
             # Update meta metrics
-            duration = (datetime.now(UTC) - start_time).total_seconds()
+            duration: int | float = (datetime.now(UTC) - start_time).total_seconds()
             scrape_duration_gauge.set(duration)
             scrape_success_gauge.set(1)
             matches_count_gauge.set(count)
@@ -154,7 +154,7 @@ def update_metrics() -> None:
         log.error("Crawler error while updating metrics: %s", e)
         with metric_lock:
             scrape_success_gauge.set(0)
-            duration = (datetime.now(UTC) - start_time).total_seconds()
+            duration: int | float = (datetime.now(UTC) - start_time).total_seconds()
             scrape_duration_gauge.set(duration)
 
         _last_update_time = datetime.now(UTC)
@@ -165,7 +165,7 @@ def update_metrics() -> None:
         log.exception("Unexpected error updating metrics: %s", e)
         with metric_lock:
             scrape_success_gauge.set(0)
-            duration = (datetime.now(UTC) - start_time).total_seconds()
+            duration: int | float = (datetime.now(UTC) - start_time).total_seconds()
             scrape_duration_gauge.set(duration)
 
         _last_update_time = datetime.now(UTC)
@@ -175,8 +175,8 @@ def update_metrics() -> None:
 
 async def periodic_update() -> None:
     """Periodically update metrics every UPDATE_INTERVAL seconds."""
-    config = get_config()
-    interval = config.update_interval_seconds
+    config: AppConfig = get_config()
+    interval: int = config.update_interval_seconds
 
     # Initial update
     update_metrics()
@@ -208,10 +208,10 @@ async def lifespan(_: FastAPI) -> AsyncGenerator[None, None]:
     Yields:
         None
     """
-    config = get_config()
+    config: AppConfig = get_config()
 
     # Validate configuration
-    errors = config.validate()
+    errors: list[str] = config.validate()
     if errors:
         for error in errors:
             log.error("Configuration error: %s", error)
@@ -285,7 +285,7 @@ async def health_endpoint() -> JSONResponse:
     Returns:
         JSON response with health status.
     """
-    is_healthy = _last_update_success or _last_update_time is None
+    is_healthy: bool = _last_update_success or _last_update_time is None
 
     return JSONResponse(
         status_code=status.HTTP_200_OK
@@ -309,7 +309,7 @@ async def readiness_endpoint() -> JSONResponse:
         JSON response with readiness status.
     """
     # Ready if we've had at least one successful update
-    is_ready = _last_update_success
+    is_ready: bool = _last_update_success
 
     return JSONResponse(
         status_code=status.HTTP_200_OK
@@ -324,10 +324,10 @@ async def readiness_endpoint() -> JSONResponse:
 
 def start() -> None:
     """Start the application."""
-    config = get_config()
+    config: AppConfig = get_config()
 
     # Validate configuration early
-    errors = config.validate()
+    errors: list[str] = config.validate()
     if errors:
         for error in errors:
             print(f"Configuration error: {error}", file=sys.stderr)

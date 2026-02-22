@@ -150,7 +150,7 @@ def _get_int_env(key: str, default: int) -> int:
     Raises:
         ValueError: If value cannot be converted to int.
     """
-    value = os.getenv(key)
+    value: str | None = os.getenv(key)
     if value is None:
         return default
     try:
@@ -172,7 +172,7 @@ def _get_float_env(key: str, default: float) -> float:
     Raises:
         ValueError: If value cannot be converted to float.
     """
-    value = os.getenv(key)
+    value: str | None = os.getenv(key)
     if value is None:
         return default
     try:
@@ -194,7 +194,7 @@ def _get_log_level_env(key: str, default: LogLevel) -> LogLevel:
     Raises:
         ValueError: If value is not a valid log level.
     """
-    value = os.getenv(key)
+    value: str | None = os.getenv(key)
     if value is None:
         return default
     try:
@@ -219,7 +219,7 @@ def _get_language_env(key: str, default: Language) -> Language:
     Raises:
         ValueError: If value is not a valid language.
     """
-    value = os.getenv(key)
+    value: str | None = os.getenv(key)
     if value is None:
         return default
     try:
