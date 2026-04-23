@@ -1698,7 +1698,7 @@ files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
 ]
-markers = {test = "python_version < \"3.13\""}
+markers = {test = "python_version <= \"3.12\""}
 
 [[package]]
 name = "typing-inspection"
@@ -1735,14 +1735,14 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [[package]]
 name = "uvicorn"
-version = "0.45.0"
+version = "0.46.0"
 description = "The lightning-fast ASGI server."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "uvicorn-0.45.0-py3-none-any.whl", hash = "sha256:2db26f588131aeec7439de00f2dd52d5f210710c1f01e407a52c90b880d1fd4f"},
-    {file = "uvicorn-0.45.0.tar.gz", hash = "sha256:3fe650df136c5bd2b9b06efc5980636344a2fbb840e9ddd86437d53144fa335d"},
+    {file = "uvicorn-0.46.0-py3-none-any.whl", hash = "sha256:bbebbcbed972d162afca128605223022bedd345b7bc7855ce66deb31487a9048"},
+    {file = "uvicorn-0.46.0.tar.gz", hash = "sha256:fb9da0926999cc6cb22dc7cd71a94a632f078e6ae47ff683c5c420750fb7413d"},
 ]
 
 [package.dependencies]
@@ -1756,4 +1756,4 @@ standard = ["colorama (>=0.4) ; sys_platform == \"win32\"", "httptools (>=0.6.3)
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "f55b9557d6a4c1349ab0b09f13a26d388cfd270f2f766b13b74c6edcfc39c686"
+content-hash = "60119dd25001352230370b9356f9b9c2a3b4bc2e8b7bb133e28050256a8ba137"
