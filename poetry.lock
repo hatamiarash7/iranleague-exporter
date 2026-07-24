@@ -667,14 +667,14 @@ files = [
 
 [[package]]
 name = "jdatetime"
-version = "5.3.0"
+version = "6.0.1"
 description = "Jalali datetime binding for python"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "jdatetime-5.3.0-py3-none-any.whl", hash = "sha256:85cb960808dc2287c93d4c7431cddcd367ee6d81c321a4db1700ee3e1d8aafcc"},
-    {file = "jdatetime-5.3.0.tar.gz", hash = "sha256:d20eb9fc2a00e86493a6156b2a0e4e579f23379e8fea186a0e603fd36a130227"},
+    {file = "jdatetime-6.0.1-py3-none-any.whl", hash = "sha256:57ab3cc70fee4b7fdd9451553fcf1aa8e63034a7c8b1b28750e02caf89183219"},
+    {file = "jdatetime-6.0.1.tar.gz", hash = "sha256:e349ec5fe4cd42b88e6f1a1d9d1de2391bfa7702a5d3d3ce870d593a475597b0"},
 ]
 
 [package.dependencies]
@@ -1756,4 +1756,4 @@ standard = ["httptools (>=0.8.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "410d9fb8605872f2b978b90e03297cc2d6792cb49f6488d65ea5d0ca4a5b8fc7"
+content-hash = "742ea98db562d01675fe1119a2c72eb960abde4adcd572567b111d40e7740a9b"
